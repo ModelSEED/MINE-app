@@ -1,3 +1,5 @@
+/* global angular */
+/* global mineDatabaseServices */
 
 angular.module('app').factory('ChemicalDamageFactory', function($rootScope){
     var factory = {
@@ -8,7 +10,7 @@ angular.module('app').factory('ChemicalDamageFactory', function($rootScope){
             var promise = factory.services.get_ids(db, collections, "");
             promise.then(function (result) {
                     factory.ids = result;
-                    $rootScope.$broadcast("idsLoaded")
+                    $rootScope.$broadcast("idsLoaded");
                 },
                 function (err) {console.error("get_ids fail");}
             );
@@ -17,7 +19,7 @@ angular.module('app').factory('ChemicalDamageFactory', function($rootScope){
             var promise = factory.services.get_rxns(db, rxn_ids);
             promise.then(function (result) {
                     factory.reactions = result;
-                    $rootScope.$broadcast("rxnLoaded")
+                    $rootScope.$broadcast("rxnLoaded");
                 },
                 function (err) {console.error(err);}
             );
@@ -36,13 +38,13 @@ angular.module('app').factory('ChemicalDamageFactory', function($rootScope){
         //Popups with image & name
         getCompoundName: function(db){
             return function($event, id) {
-                if ((!$($event.target).data('bs.popover')) && (id[0] == "C")) {
+                if ((!$($event.target).data('bs.popover')) && (id[0] === "C")) {
                     var Promise = factory.services.get_comps(db, [id]);
                     Promise.then(
                         function (result) {
                             var cTitle;
-                            if (result[0].Names) {cTitle = result[0].Names[0]}
-                            else if (result[0].MINE_id) {cTitle = result[0].MINE_id}
+                            if (result[0].Names) {cTitle = result[0].Names[0];}
+                            else if (result[0].MINE_id) {cTitle = result[0].MINE_id;}
                             if (cTitle) {
                                 $($event.target).popover({
                                     title: cTitle,
@@ -58,7 +60,7 @@ angular.module('app').factory('ChemicalDamageFactory', function($rootScope){
             }
         }
     };
-    return factory
+    return factory;
 });
 
 angular.module('app').controller('s1Ctl', function($scope,$stateParams,$cookieStore,sharedFactory,ChemicalDamageFactory){
@@ -78,7 +80,7 @@ angular.module('app').controller('s1Ctl', function($scope,$stateParams,$cookieSt
     else {ChemicalDamageFactory.getIds(top30db, 'reactions')}
 
     $scope.$on("idsLoaded", function () {
-        ChemicalDamageFactory.getReactions(top30db, ChemicalDamageFactory.ids)
+        ChemicalDamageFactory.getReactions(top30db, ChemicalDamageFactory.ids);
     });
 
     $scope.$on("rxnLoaded", function () {
@@ -99,7 +101,7 @@ angular.module('app').controller('s1Ctl', function($scope,$stateParams,$cookieSt
             filtered = ChemicalDamageFactory.filterList(filtered, "Compound", $scope.searchComp);
             $scope.paginatedData = sharedFactory.paginateList(filtered, $scope.currentPage, $scope.numPerPage);
             $scope.items = filtered.length;
-            $cookieStore.put("S1_Page", $scope.currentPage)
+            $cookieStore.put("S1_Page", $scope.currentPage);
         }
     });
 });
@@ -138,7 +140,7 @@ angular.module('app').controller('s2Ctl', function($rootScope,$scope,$stateParam
             var filtered = ChemicalDamageFactory.filterList(operators, "_id", $scope.searchName);
             $scope.paginated = sharedFactory.paginateList(filtered, $scope.currentPage, $scope.numPerPage);
             $scope.items = filtered.length;
-            $cookieStore.put("S2_Page", $scope.currentPage)
+            $cookieStore.put("S2_Page", $scope.currentPage);
         }
     });
 });
