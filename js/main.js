@@ -10,8 +10,8 @@ angular.module('app').factory('sharedFactory', function($state, $cookieStore, $r
         db_dependent_states: ['compounds', 'metabolomicsCompounds', 'structuresres', 'operator', 'acompound.reactants',
             'acompound.products', 'acompound.overview'],
         selected_model: "",
-        img_src: "http://webfba.chem-eng.northwestern.edu/MINE_imgs/",
-        services: new mineDatabaseServices('http://modelseed.org/services/mine-database'),
+        img_src: "https://bioseed.mcs.anl.gov/~chenry/minedatabase/MINE_imgs/",
+        services: new mineDatabaseServices('https://modelseed.org/services/mine-database'),
         numPerPage: 25, // default number of results to show per page
         setDB: function (db_id) {
             console.log("setDB:"+db_id);
@@ -24,7 +24,7 @@ angular.module('app').factory('sharedFactory', function($state, $cookieStore, $r
         },
         getImagePath: function (id) {
             if (id) {
-                var img_root = "http://webfba.chem-eng.northwestern.edu/MINE_imgs/";
+                var img_root = "https://bioseed.mcs.anl.gov/~chenry/minedatabase/MINE_imgs/";
                 var dir_depth = 4;
                 var ext = '.svg';
                 for (var i = 0; i < dir_depth; i++) {
@@ -136,8 +136,8 @@ angular.module('app').controller('cookieCtl',function($scope,$cookieStore) {
             }
         });
     };
-    $scope.structure_src = 'http://minedatabase.mcs.anl.gov/release/CD-MINE/';
-    $scope.spectra_src = 'http://minedatabase.mcs.anl.gov/release/CFM_spectra/';
+    $scope.structure_src = 'https://minedatabase.mcs.anl.gov/release/CD-MINE/';
+    $scope.spectra_src = 'https://minedatabase.mcs.anl.gov/release/CFM_spectra/';
 });
 
 angular.module('app').config(function($stateProvider, $urlRouterProvider) {
